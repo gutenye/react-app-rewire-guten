@@ -1,31 +1,10 @@
-require('pdjs')
-const { getLoader, loaderNameMatches } = require('react-app-rewired')
-const Compression = require('compression-webpack-plugin')
 const paths = require('react-scripts/config/paths')
+const Compression = require('compression-webpack-plugin')
+const { getLoader, loaderNameMatches } = require('react-app-rewired')
 //const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = function(config, env) {
   const oneOfRules = config.module.rules.find((rule) => rule.oneOf !== undefined).oneOf
-
-  // resolve.modules
-  config.resolve.modules.unshift(paths.appSrc)
-
-  // Disable eslint
-  const eslintLoaderParent = config.module.rules[0]
-  eslintLoaderParent.test = /DISABLED/
-
-  // SVG
-  oneOfRules.unshift(
-    { test: /\.svg$/, use: ['babel-loader', {loader: '@gutenye/react-svg-loader', options: {es5: false, svgo: { pretty: true, plugins: [ { removeStyleElement: true } ] } }}] }
-  )
-
-  // SCSS
-  // appSrc for _variables.scss
-  //oneOfRules.unshift(
-  //env === 'development' ?
-  //{ test: /\.scss$/, use: ['style-loader', 'css-loader', {loader: 'sass-loader', options: {includePaths: [paths.appSrc, paths.appNodeModules]}}] } :
-  //{ test: /\.scss$/, loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: ['css-loader', {loader: 'sass-loader', options: {includePaths: [paths.appSrc, paths.appNodeModules]}}]})}
-  //)
 
   // Babel
   const babelLoader = getLoader(config.module.rules, rule => loaderNameMatches(rule, 'babel-loader'))
@@ -53,13 +32,34 @@ module.exports = function(config, env) {
     ]],
   ]
 
+  // resolve.modules
+  config.resolve.modules.unshift(paths.appSrc)
+
+  // Disable eslint
+  const eslintLoaderParent = config.module.rules[0]
+  eslintLoaderParent.test = /DISABLED/
+
+  // SVG
+  oneOfRules.unshift(
+    { test: /\.svg$/, use: ['babel-loader', {loader: '@gutenye/react-svg-loader', options: {es5: false, svgo: { pretty: true, plugins: [ { removeStyleElement: true } ] } }}] }
+  )
+
+  // SCSS
+  // appSrc for _variables.scss
+  //oneOfRules.unshift(
+  //env === 'development' ?
+  //{ test: /\.scss$/, use: ['style-loader', 'css-loader', {loader: 'sass-loader', options: {includePaths: [paths.appSrc, paths.appNodeModules]}}] } :
+  //{ test: /\.scss$/, loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: ['css-loader', {loader: 'sass-loader', options: {includePaths: [paths.appSrc, paths.appNodeModules]}}]})}
+  //)
+
+
   // Alias
-  config.resolve.alias = Object.assign(config.resolve.alias, {
+  Object.assign(config.resolve.alias, {
     'react-icon-base': '@gutenye/react-icon-base',
     'bcrypt': 'node-mocks/bcrypt',
   })
   if (env === 'production') {
-    config.resolve.alias = Object.assign(config.resolve.alias, {
+    Object.assign(config.resolve.alias, {
       'AppDesign': 'node-mocks/false',
     })
   }
