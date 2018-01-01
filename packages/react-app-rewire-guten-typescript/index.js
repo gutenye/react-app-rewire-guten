@@ -9,7 +9,7 @@ const fs = require('fs')
 module.exports = function(config, env) {
   const oneOfRules = config.module.rules.find((rule) => rule.oneOf !== undefined).oneOf
 
-  config = rewireGuten(config)
+  config = rewireGuten(config, env)
 
 
   // paths
@@ -28,13 +28,15 @@ module.exports = function(config, env) {
 
   // ts-loader
   oneOfRules.unshift({
-    test: /\.(ts|tsx)$/,
+    test: /\.tsx?$/,
     include: paths.appSrc,
     use: [
+      { loader: 'cache-loader' },
+      { loader: 'thread-loader', options: { workers: require('os').cpus().length - 1 } },
       {
         loader: require.resolve('ts-loader'),
         options: {
-          transpileOnly: true,
+          happyPackMode: true,
           getCustomTransformers: () => ({
             before: [ TsImportPlugin([
               { libraryName: 'antd-mobile', libraryDirectory: 'es', style: 'css' },
