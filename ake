@@ -2,4 +2,5 @@
 
 case "$1" in
   bootstrap ) lerna bootstrap ;;
+  publish ) lerna publish ;;
 esac

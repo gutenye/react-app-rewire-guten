@@ -4,10 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "cache-loader": "^1.2.0",
     "fork-ts-checker-webpack-plugin": "^0.2.10",
     "react-app-rewire-guten": "^2.0.1",
-    "thread-loader": "^1.1.2",
     "ts-import-plugin": "^1.4.3",
     "ts-loader": "^3.2.0",
     "typescript-styled-plugin": "^0.2.2"

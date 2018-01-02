@@ -5,7 +5,6 @@ const rewireGuten = require('react-app-rewire-guten')
 const path = require('path')
 const fs = require('fs')
 
-
 module.exports = function(config, env) {
   const oneOfRules = config.module.rules.find((rule) => rule.oneOf !== undefined).oneOf
 
@@ -31,13 +30,12 @@ module.exports = function(config, env) {
     test: /\.tsx?$/,
     include: paths.appSrc,
     use: [
-      { loader: 'cache-loader' },
-      { loader: 'thread-loader', options: { workers: require('os').cpus().length - 1 } },
       {
         loader: require.resolve('ts-loader'),
         options: {
           happyPackMode: true,
-          getCustomTransformers: () => ({
+          getCustomTransformers: () => (
+            {
             before: [ TsImportPlugin([
               { libraryName: 'antd-mobile', libraryDirectory: 'es', style: 'css' },
               { libraryName: 'antd', libraryDirectory: 'es', style: 'css' },
