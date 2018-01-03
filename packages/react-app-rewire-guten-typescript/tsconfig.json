@@ -6,10 +6,10 @@
         "src/*"
       ]
     },
-    "module": "es6",
+    "module": "esnext",
     "target": "es5",
     "lib": [
-      "es7",
+      "esnext",
       "dom"
     ],
     "sourceMap": true,
