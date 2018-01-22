@@ -41,7 +41,12 @@ module.exports = function(config, env) {
 
   // SVG
   oneOfRules.unshift(
-    { test: /\.svg$/, use: ['babel-loader', {loader: '@gutenye/react-svg-loader', options: {es5: false, svgo: { pretty: true, plugins: [ { removeStyleElement: true } ] } }}] }
+    { test: /\.svg$/, use: [require.resolve('babel-loader'), {loader: require.resolve('@gutenye/react-svg-loader'), options: {es5: false, svgo: { pretty: true, plugins: [ { removeStyleElement: true } ] } }}] }
+  )
+
+  // TEXT
+  oneOfRules.unshift(
+    { test: /\.txt$/, use: [require.resolve('raw-loader')] }
   )
 
   // SCSS
