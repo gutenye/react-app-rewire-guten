@@ -28,7 +28,7 @@ module.exports = function(config, env) {
   // ts-loader
   oneOfRules.unshift({
     test: /\.tsx?$/,
-    include: paths.appSrc,
+    include: [paths.appSrc, path.join(paths.appPath, '../shared')],
     use: [
       {
         loader: require.resolve('ts-loader'),
