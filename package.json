@@ -1,11 +1,15 @@
 {
-  "name": "react-app-rewire-guten",
+  "name": "react-app-rewire-guten-monorepo",
+  "private": true,
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:gutenye/react-app-rewire-guten.git",
   "author": "Guten Ye <ywzhaifei@gmail.com>",
   "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
-    "lerna": "^2.5.1"
+    "lerna": "^3.4.0"
   }
 }
